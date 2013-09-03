@@ -6,5 +6,6 @@
     <string name="previous">&lt; Previous</string>
     <string name="next">Next &gt;</string>
     <string name="random">Random</string>
+    <string name="loading">Loading...</string>
 
 </resources>
