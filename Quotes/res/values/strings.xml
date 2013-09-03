@@ -3,5 +3,8 @@
 	<string name="app_name">Quotes</string>
 	<string name="hello_world">Hello world!</string>
 	<string name="menu_settings">Settings</string>
+    <string name="previous">&lt; Previous</string>
+    <string name="next">Next &gt;</string>
+    <string name="random">Random</string>
 
 </resources>
