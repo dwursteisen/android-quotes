@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -22,7 +21,7 @@
 
         <FrameLayout
             android:background="#14B9D6"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_width="0px"
             android:layout_weight="1">
 
@@ -30,14 +29,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/previous"
-                android:paddingTop="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:id="@+id/previous" />
         </FrameLayout>
 
         <FrameLayout
             android:background="#F27935"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_width="0px"
             android:layout_weight="1">
 
@@ -45,14 +45,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/random"
-                android:paddingTop="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:id="@+id/random" />
         </FrameLayout>
 
         <FrameLayout
             android:background="#33CC99"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_width="0px"
             android:layout_weight="1">
 
@@ -60,7 +61,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/next"
-                android:paddingTop="20dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:id="@+id/next" />
         </FrameLayout>

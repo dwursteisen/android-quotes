@@ -30,7 +30,6 @@ public class HomeActivity extends Activity {
     @ViewById
     TextView quote;
 
-    private final Object lock = new Object();
 
     @AfterViews
     void updateQuoteText() {
