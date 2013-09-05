@@ -4,6 +4,7 @@ package com.github.dwursteisen.quotes;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.dwursteisen.quotes.model.QuotesData;
@@ -34,11 +35,21 @@ public class HomeActivity extends Activity {
     @ViewById
     TextView quote;
 
-    private final Object lock = new Object();
+    @ViewById
+    TextView authorName;
+
+    @ViewById
+    TextView authorRole;
+
+    @ViewById
+    ImageView avatar;
 
     @AfterViews
     void updateQuoteText() {
-        quote.setText(jsonQuotes.quotes[currentQuote].quote);
+        QuotesData.Quote quoteObj = jsonQuotes.quotes[currentQuote];
+        quote.setText(quoteObj.quote);
+        authorName.setText(quoteObj.author.name);
+        authorRole.setText(quoteObj.author.subtitle);
     }
 
     @Override

@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><dimen name="large">22sp</dimen></resources>
+<resources><dimen name="large">22sp</dimen>
+    <dimen name="small">14sp</dimen>
+</resources>
