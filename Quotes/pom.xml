@@ -16,9 +16,9 @@
 		<!-- Plugins -->
 		<android-maven-plugin.version>3.6.0</android-maven-plugin.version>
 		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
-		<api.platform>17</api.platform>
+        <api.platform>18</api.platform>
 
-		<!-- Dependencies -->
+        <!-- Dependencies -->
 		<androidannotations.version>2.7.1</androidannotations.version>
 		<android.version>4.1.1.4</android.version>
         <gson.version>2.2.2</gson.version>

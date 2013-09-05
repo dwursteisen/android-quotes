@@ -2,28 +2,33 @@
     {
         author: {
             name: "Winston Churchill",
-            subtitle: "Primer Minister"
+            subtitle: "Primer Minister",
+            avatar: "avatar/churchill.png"
         },
         quote: "We make a living by what we get, but we make a life by what we give." 
     },
     {
         author: {
             name: "Winston Churchill",
-            subtitle: "Primer Minister"
+            subtitle: "Primer Minister",
+            avatar: "avatar/churchill.png"
+
         },
         quote: "A fanatic is one who can’t change his mind and won’t change the subject."
     },
     {
         author: {
             name: "Winston Churchill",
-            subtitle: "Primer Minister"
+            subtitle: "Primer Minister",
+            avatar: "avatar/churchill.png"
         },
         quote: "A lie gets halfway around the world before the truth has a chance to get its pants on."
     },
     {
         author: {
             name: "Winston Churchill",
-            subtitle: "Primer Minister"
+            subtitle: "Primer Minister",
+            avatar: "avatar/churchill.png"
         },
         quote: "I am ready to meet my Maker. Whether my Maker is prepared for the ordeal of meeting me is another matter."
     },
@@ -42,7 +47,8 @@
         },
         {
             author: {
-                name: "Gandhi"
+                name: "Gandhi",
+                avatar: "avatar/gandhi.png"
             },
             quote: "You must be the change you wish to see in the world."
         },
@@ -65,7 +71,8 @@
         },
          {
             author: {
-                name: "Marcel Proust"
+                name: "Marcel Proust",
+                avatar: "avatar/proust.png"
             },
             quote: "The real voyage of discovery consists not in seeking new lands but seeing with new eyes."
         }

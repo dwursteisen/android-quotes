@@ -2,6 +2,7 @@
 package com.github.dwursteisen.quotes;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -25,7 +26,8 @@ public class HomeActivity extends Activity {
 
 
     private static final Random RANDOMIZER = new Random();
-    public static final String QUOTES_DATA = "quotes.js";
+
+    private static final String QUOTES_DATA = "quotes.js";
 
     private int currentQuote = 0;
     private int quoteIndex = 0;
@@ -50,6 +52,12 @@ public class HomeActivity extends Activity {
         quote.setText(quoteObj.quote);
         authorName.setText(quoteObj.author.name);
         authorRole.setText(quoteObj.author.subtitle);
+
+        if (quoteObj.author.avatar != null) {
+            avatar.setImageURI(Uri.parse("file:///android_asset/" + quoteObj.author.avatar));
+        } else {
+            avatar.setImageResource(R.drawable.ic_launcher);
+        }
     }
 
     @Override

@@ -15,5 +15,6 @@ public class QuotesData {
     public static class Author {
         public String name;
         public String subtitle;
+        public String avatar;
     }
 }
