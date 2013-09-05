@@ -2,38 +2,54 @@
 package com.github.dwursteisen.quotes;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.github.dwursteisen.quotes.model.QuotesData;
+import com.google.gson.Gson;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Random;
 
 @EActivity(R.layout.activity_main)
 public class HomeActivity extends Activity {
 
-    private static final String[] QUOTES = {
-            "His ignorance is encyclopedic",
-            "Political correctness is tyranny with manners.",
-            "Sex and religion are closer to each other than either might prefer."
-    };
 
     private static final Random RANDOMIZER = new Random();
-    private static final int MAX_QUOTE_INDEX = 1000;
+    public static final String QUOTES_DATA = "quotes.js";
 
     private int currentQuote = 0;
     private int quoteIndex = 0;
 
+    private QuotesData jsonQuotes;
+
     @ViewById
     TextView quote;
 
+    private final Object lock = new Object();
 
     @AfterViews
     void updateQuoteText() {
-        quote.setText(QUOTES[currentQuote]);
+        quote.setText(jsonQuotes.quotes[currentQuote].quote);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            Reader is = new BufferedReader(new InputStreamReader(this.getAssets().open(QUOTES_DATA)));
+            jsonQuotes = new Gson().fromJson(is, QuotesData.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Damn. Got a problem when opening quotes !", e);
+        }
     }
 
     @Override
@@ -50,7 +66,7 @@ public class HomeActivity extends Activity {
     }
 
     private int secureQuoteIndex(int quoteIndex) {
-        return (Math.abs(quoteIndex) % QUOTES.length + QUOTES.length) % QUOTES.length;
+        return (Math.abs(quoteIndex) % jsonQuotes.quotes.length + jsonQuotes.quotes.length) % jsonQuotes.quotes.length;
     }
 
     @Click
