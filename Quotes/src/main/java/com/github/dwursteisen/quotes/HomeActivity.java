@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.dwursteisen.quotes.analytics.Tracker;
 import com.github.dwursteisen.quotes.model.QuotesData;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.google.gson.Gson;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
@@ -47,6 +47,7 @@ public class HomeActivity extends Activity {
 
     @ViewById
     ImageView avatar;
+    private Tracker tracker;
 
     @AfterViews
     void updateQuoteText() {
@@ -84,6 +85,8 @@ public class HomeActivity extends Activity {
         } catch (IOException e) {
             throw new RuntimeException("Damn. Got a problem when opening quotes !", e);
         }
+
+        tracker = new Tracker(this);
         randomQuote();
     }
 
@@ -98,6 +101,8 @@ public class HomeActivity extends Activity {
         currentQuote = secureQuoteIndex(++quoteIndex);
         updateQuoteText();
         System.err.println("next was clicked");
+
+        tracker.createEvent("home", "next_clicked").andSendIt();
     }
 
     private int secureQuoteIndex(int quoteIndex) {
@@ -109,6 +114,8 @@ public class HomeActivity extends Activity {
         currentQuote = secureQuoteIndex(--quoteIndex);
         updateQuoteText();
         System.err.println("previous was clicked");
+
+        tracker.createEvent("home", "previous_clicked").andSendIt();
     }
 
     @Click
@@ -116,6 +123,8 @@ public class HomeActivity extends Activity {
         randomQuote();
         updateQuoteText();
         System.err.println("random was clicked");
+
+        tracker.createEvent("home", "random_clicked").andSendIt();
     }
 
     private void randomQuote() {
@@ -126,13 +135,13 @@ public class HomeActivity extends Activity {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+        tracker.start(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+        tracker.stop(this);
     }
 
 }
