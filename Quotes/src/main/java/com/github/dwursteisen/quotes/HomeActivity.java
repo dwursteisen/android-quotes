@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.dwursteisen.quotes.model.QuotesData;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.gson.Gson;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
@@ -120,6 +121,18 @@ public class HomeActivity extends Activity {
     private void randomQuote() {
         quoteIndex = RANDOMIZER.nextInt(100);
         currentQuote = secureQuoteIndex(quoteIndex);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);  // Add this method.
     }
 
 }
