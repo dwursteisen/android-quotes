@@ -83,6 +83,7 @@ public class HomeActivity extends Activity {
         } catch (IOException e) {
             throw new RuntimeException("Damn. Got a problem when opening quotes !", e);
         }
+        randomQuote();
     }
 
     @Override
@@ -111,10 +112,14 @@ public class HomeActivity extends Activity {
 
     @Click
     public void randomClicked() {
-        quoteIndex = RANDOMIZER.nextInt(100);
-        currentQuote = secureQuoteIndex(quoteIndex);
+        randomQuote();
         updateQuoteText();
         System.err.println("random was clicked");
+    }
+
+    private void randomQuote() {
+        quoteIndex = RANDOMIZER.nextInt(100);
+        currentQuote = secureQuoteIndex(quoteIndex);
     }
 
 }
