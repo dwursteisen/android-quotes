@@ -2,7 +2,7 @@
 package com.github.dwursteisen.quotes;
 
 import android.app.Activity;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -17,6 +17,7 @@ import com.googlecode.androidannotations.annotations.ViewById;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Random;
@@ -53,11 +54,24 @@ public class HomeActivity extends Activity {
         authorName.setText(quoteObj.author.name);
         authorRole.setText(quoteObj.author.subtitle);
 
-        if (quoteObj.author.avatar != null) {
-            avatar.setImageURI(Uri.parse("file:///android_asset/" + quoteObj.author.avatar));
-        } else {
+        try {
+            if (quoteObj.author.avatar != null) {
+                avatar.setImageDrawable(getImage(quoteObj.author.avatar));
+            } else {
+                avatar.setImageResource(R.drawable.ic_launcher);
+            }
+        } catch (IOException e) {
             avatar.setImageResource(R.drawable.ic_launcher);
         }
+    }
+
+    private Drawable getImage(String filename) throws IOException {
+        // get input stream
+        InputStream ims = getAssets().open(filename);
+        // load image as Drawable
+        Drawable d = Drawable.createFromStream(ims, null);
+
+        return d;
     }
 
     @Override
