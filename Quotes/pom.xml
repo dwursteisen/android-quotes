@@ -22,6 +22,7 @@
         <android.version>4.1.1.4</android.version>
         <gson.version>2.2.2</gson.version>
         <analytics.version>3.0.0</analytics.version>
+        <gesticulate.version>0.1</gesture.version>
     </properties>
 
     <dependencies>
@@ -55,8 +56,23 @@
             <version>${analytics.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.android</groupId>
+            <artifactId>gesticulate</artifactId>
+            <version>${gesticulate.version}</version>
+        </dependency>
+
+
+
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://github.com/dwursteisen/android-quotes/raw/master/repository/</url>
+        </repository>
+    </repositories>
 
     <build>
         <resources>
