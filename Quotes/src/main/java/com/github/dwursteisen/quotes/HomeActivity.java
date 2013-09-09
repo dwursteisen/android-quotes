@@ -5,16 +5,22 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.b50.gesticulate.SwipeDetector;
 import com.github.dwursteisen.quotes.analytics.Tracker;
 import com.github.dwursteisen.quotes.model.QuotesData;
 import com.google.gson.Gson;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.LongClick;
+import com.googlecode.androidannotations.annotations.Touch;
 import com.googlecode.androidannotations.annotations.ViewById;
 
 import java.io.BufferedReader;
@@ -52,7 +58,45 @@ public class HomeActivity extends Activity {
     ImageView avatar;
     private Tracker tracker;
 
+    private GestureDetector detector;
+
     @AfterViews
+    void initAfterViews() {
+        detector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                SwipeDetector detector = new SwipeDetector(e1, e2, velocityX, velocityY);
+                if (detector.isDownSwipe()) {
+                    Log.d(ACTIVITY_TAG, "down swipe");
+                    tracker.createEvent("quote", "down_swipe").andSendIt();
+                } else if (detector.isLeftSwipe()) {
+                    Log.d(ACTIVITY_TAG, "left swipe");
+                    tracker.createEvent("quote", "left_swipe").andSendIt();
+
+                } else if (detector.isRightSwipe()) {
+                    Log.d(ACTIVITY_TAG, "right swipe");
+                    tracker.createEvent("quote", "right_swipe").andSendIt();
+
+                } else if (detector.isUpSwipe()) {
+                    Log.d(ACTIVITY_TAG, "up swipe");
+                    tracker.createEvent("quote", "up_swipe").andSendIt();
+                }
+                return false;
+            }
+        });
+
+        quote.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                detector.onTouchEvent(event);
+                return true;
+            }
+        });
+        updateQuoteText();
+    }
+
+
+
     void updateQuoteText() {
         QuotesData.Quote quoteObj = jsonQuotes.quotes[currentQuote];
         quote.setText(quoteObj.quote);
@@ -100,12 +144,45 @@ public class HomeActivity extends Activity {
     }
 
     @Click
+    public void quoteClicked() {
+        spyEvent("quote");
+    }
+
+    @LongClick
+    public void quoteLongClicked() {
+        spyEvent("quote_long");
+    }
+
+    @Click
+    public void avatarClicked() {
+        spyEvent("avatar");
+    }
+
+    @LongClick
+    public void avatarLongClicked() {
+        spyEvent("avatar_long");
+    }
+
+    @Click
+    public void authorNameClicked() {
+        spyEvent("author_name");
+    }
+
+    @LongClick
+    public void authorNameLongClicked() {
+        spyEvent("author_name_long");
+    }
+
+    @Click
     public void nextClicked() {
         currentQuote = secureQuoteIndex(++quoteIndex);
         updateQuoteText();
-        Log.d(ACTIVITY_TAG, "next was clicked");
+        spyEvent("next");
+    }
 
-        tracker.createEvent("home", "next_clicked").andSendIt();
+    @LongClick
+    public void nextLongClicked() {
+        spyEvent("next_long");
     }
 
     private int secureQuoteIndex(int quoteIndex) {
@@ -116,18 +193,24 @@ public class HomeActivity extends Activity {
     public void previousClicked() {
         currentQuote = secureQuoteIndex(--quoteIndex);
         updateQuoteText();
-        Log.d(ACTIVITY_TAG, "previous was clicked");
+        spyEvent("previous");
+    }
 
-        tracker.createEvent("home", "previous_clicked").andSendIt();
+    @LongClick
+    public void previousLongClicked() {
+        spyEvent("previous_long");
     }
 
     @Click
     public void randomClicked() {
         randomQuote();
         updateQuoteText();
-        Log.d(ACTIVITY_TAG, "random was clicked");
+        spyEvent("random");
+    }
 
-        tracker.createEvent("home", "random_clicked").andSendIt();
+    @LongClick
+    public void randomLongClicked() {
+        spyEvent("random");
     }
 
     private void randomQuote() {
@@ -145,6 +228,11 @@ public class HomeActivity extends Activity {
     public void onStop() {
         super.onStop();
         tracker.stop(this);
+    }
+
+    private void spyEvent(String event) {
+        Log.d("Event", event + " was clicked");
+        tracker.createEvent("home", event + "_clicked").andSendIt();
     }
 
 }
