@@ -4,6 +4,7 @@ package com.github.dwursteisen.quotes;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ import java.util.Random;
 @EActivity(R.layout.activity_main)
 public class HomeActivity extends Activity {
 
+
+    private static final String ACTIVITY_TAG = "HomeActivity";
 
     private static final Random RANDOMIZER = new Random();
 
@@ -100,7 +103,7 @@ public class HomeActivity extends Activity {
     public void nextClicked() {
         currentQuote = secureQuoteIndex(++quoteIndex);
         updateQuoteText();
-        System.err.println("next was clicked");
+        Log.d(ACTIVITY_TAG, "next was clicked");
 
         tracker.createEvent("home", "next_clicked").andSendIt();
     }
@@ -113,7 +116,7 @@ public class HomeActivity extends Activity {
     public void previousClicked() {
         currentQuote = secureQuoteIndex(--quoteIndex);
         updateQuoteText();
-        System.err.println("previous was clicked");
+        Log.d(ACTIVITY_TAG, "previous was clicked");
 
         tracker.createEvent("home", "previous_clicked").andSendIt();
     }
@@ -122,7 +125,7 @@ public class HomeActivity extends Activity {
     public void randomClicked() {
         randomQuote();
         updateQuoteText();
-        System.err.println("random was clicked");
+        Log.d(ACTIVITY_TAG, "random was clicked");
 
         tracker.createEvent("home", "random_clicked").andSendIt();
     }
