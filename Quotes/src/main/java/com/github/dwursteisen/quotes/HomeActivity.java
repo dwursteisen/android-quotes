@@ -20,7 +20,6 @@ import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.LongClick;
-import com.googlecode.androidannotations.annotations.Touch;
 import com.googlecode.androidannotations.annotations.ViewById;
 
 import java.io.BufferedReader;
@@ -28,6 +27,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 @EActivity(R.layout.activity_main)
@@ -129,6 +131,9 @@ public class HomeActivity extends Activity {
         try {
             Reader is = new BufferedReader(new InputStreamReader(this.getAssets().open(QUOTES_DATA)));
             jsonQuotes = new Gson().fromJson(is, QuotesData.class);
+            List<QuotesData.Quote> quotes = Arrays.asList(jsonQuotes.quotes);
+            Collections.shuffle(quotes);
+            jsonQuotes.quotes = quotes.toArray(new QuotesData.Quote[quotes.size()]);
         } catch (IOException e) {
             throw new RuntimeException("Damn. Got a problem when opening quotes !", e);
         }
